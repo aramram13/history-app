@@ -112,4 +112,62 @@
     <h1 id="videoTitle">Episode Title</h1>
     <iframe id="videoPlayer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     <br>
-    <button class="btn" onclick="startQuiz()" style="text-align: center; padding-left: 0;">I Finished the Episode
+    <button class="btn" onclick="startQuiz()" style="text-align: center; padding-left: 0;">I Finished the Episode! Let's Play</button>
+    <br>
+    <button class="btn menu-btn" style="text-align: center; padding-left: 0;" onclick="showMenu()">Return to Library</button>
+</div>
+
+<div class="container hidden" id="quizScreen">
+    <h1><span class="ornament">&#x2699;</span> Historical Review <span class="ornament">&#x2699;</span></h1>
+    <div class="progress" id="quizProgress">Question 1 of 5</div>
+    <p id="questionText">Question goes here</p>
+    <div id="answerButtons"></div>
+    <div id="feedback"></div>
+</div>
+
+<div class="container hidden" id="successScreen">
+    <h1><span class="ornament">&#x2605;</span> Excellent Work! <span class="ornament">&#x2605;</span></h1>
+    <p id="funFact">Fun fact goes here.</p>
+    <button class="btn" style="text-align: center; padding-left: 0;" onclick="showMenu()">Return to Library</button>
+</div>
+
+<script>
+// THE CONTENT DATABASE 
+const episodes = [
+    {
+        title: "Ep 1: A New War Changes The Country", youtubeId: "DydmaedDIhE",
+        fact: "To bypass Vanderbilt's railroads, John D. Rockefeller completely revolutionized the industry by building a massive 4,000-mile pipeline to transport his oil.",
+        questions: [
+            { q: "Cornelius Vanderbilt built a massive shipping and railroad empire, earning him what famous naval nickname?", correct: "The Commodore", wrong1: "The Captain", wrong2: "The Admiral" },
+            { q: "What major American conflict had just ended when Vanderbilt started expanding his railroad empire?", correct: "The Civil War", wrong1: "World War I", wrong2: "The Revolutionary War" },
+            { q: "Before cars were invented, what was crude oil primarily refined into so people could safely light their homes?", correct: "Kerosene", wrong1: "Gasoline", wrong2: "Diesel" },
+            { q: "To bypass the railroads, John D. Rockefeller built a massive 4,000-mile ________ to transport his oil.", correct: "Pipeline", wrong1: "Highway", wrong2: "Canal" },
+            { q: "Vanderbilt's wealth was built on railroads, but Rockefeller's wealth was built on what resource?", correct: "Oil", wrong1: "Coal", wrong2: "Steel" }
+        ]
+    },
+    {
+        title: "Ep 2: How Steel Forged a US Empire", youtubeId: "EI_4QDByiW4",
+        fact: "Andrew Carnegie was an incredible philanthropist. Before he died, he gave away over $350 million, building thousands of public libraries across the United States.",
+        questions: [
+            { q: "Who was the Scottish immigrant that built a massive bridge over the Mississippi River?", correct: "Andrew Carnegie", wrong1: "Thomas Edison", wrong2: "Henry Ford" },
+            { q: "Carnegie revolutionized construction by mass-producing what metal, which was much stronger than iron?", correct: "Steel", wrong1: "Aluminum", wrong2: "Copper" },
+            { q: "To prove to the public that his new bridge was safe, Carnegie led what large animal across it?", correct: "An Elephant", wrong1: "A Horse", wrong2: "A Bear" },
+            { q: "Carnegie's mentor was a powerful and wealthy railroad executive named Tom ________.", correct: "Scott", wrong1: "Smith", wrong2: "Jones" },
+            { q: "What city was Carnegie's first massive bridge built in to connect the East and West?", correct: "St. Louis", wrong1: "Chicago", wrong2: "New York" }
+        ]
+    },
+    {
+        title: "Ep 3: Greed Triggers a Horrific Disaster", youtubeId: "SO-CGn0Ig-U",
+        fact: "The Johnstown Flood was a turning point for Andrew Carnegie. Seeking to repair his public image, he devoted the second half of his life entirely to giving his money away.",
+        questions: [
+            { q: "Carnegie hired a ruthless businessman to help run his steel empire. What was his name?", correct: "Henry Frick", wrong1: "J.P. Morgan", wrong2: "Nikola Tesla" },
+            { q: "To create a private lake for a wealthy club, a dam was altered, eventually leading to a devastating flood in what town?", correct: "Johnstown", wrong1: "Jamestown", wrong2: "Pittsburgh" },
+            { q: "After the flood, Andrew Carnegie donated millions of dollars to rebuild. This was the start of his massive era of ________.", correct: "Philanthropy", wrong1: "Politics", wrong2: "Military Service" },
+            { q: "Where was Carnegie's most famous and massive steel plant located, which later became the site of a famous labor strike?", correct: "Homestead, PA", wrong1: "Detroit, MI", wrong2: "Cleveland, OH" },
+            { q: "Did Andrew Carnegie and Henry Frick remain best friends for the rest of their lives?", correct: "No, they became bitter rivals", wrong1: "Yes, they were always close", wrong2: "They retired together" }
+        ]
+    },
+    {
+        title: "Ep 4: How Edison Electrified the USA", youtubeId: "p0xBhGLLnbQ",
+        fact: "J.P. Morgan's home was the very first private residence in the world to be fully lit by electricity, powered by a noisy generator Edison installed in the basement!",
+        questions
