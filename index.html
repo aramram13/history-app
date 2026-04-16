@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History Explorer: The Men Who Built America</title>
     <style>
-        /* Professional & Senior-Friendly CSS */
+        /* Gilded Age & Senior-Friendly CSS */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #F7FAFC; /* Softer, warmer background */
-            color: #2D3748; /* High-contrast charcoal text */
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            background-color: #FDFBF7; /* Warm parchment cream */
+            color: #2C1A0D; /* Dark mahogany/sepia for high contrast */
             margin: 0;
             padding: 20px;
             display: flex;
@@ -21,54 +21,66 @@
         .container {
             background-color: #FFFFFF;
             padding: 45px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08); /* Softer, wider shadow */
-            border: 1px solid #E2E8F0; /* Subtle professional border */
+            border-radius: 4px; /* Less rounded, more classic */
+            box-shadow: 0 15px 35px rgba(44, 26, 13, 0.15); 
+            border: 4px double #D4AF37; /* Ornate gold double border */
             max-width: 900px;
             width: 100%;
         }
         h1 { 
-            font-family: 'Georgia', serif; /* Classic historical look */
-            font-size: 38px; 
-            color: #1A365D; /* Deep navy blue */
+            font-family: 'Georgia', serif;
+            font-size: 40px; 
+            color: #5E1914; /* Deep rich burgundy */
             margin-bottom: 30px; 
-            border-bottom: 2px solid #E2E8F0;
+            border-bottom: 2px solid #D4AF37;
             padding-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .ornament {
+            color: #D4AF37;
+            font-size: 24px;
+            margin: 0 15px;
+            vertical-align: middle;
         }
         p { 
+            font-family: 'Arial', sans-serif; /* Keep reading text simple and sans-serif */
             font-size: 26px; 
             line-height: 1.7; 
+            color: #1A1A1A;
         }
         .btn {
-            background-color: #2B6CB0; /* Professional rich blue */
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 20px 40px;
+            background-color: #5E1914; /* Burgundy */
+            color: #FDFBF7; /* Parchment text */
+            border: 2px solid #D4AF37; /* Gold border */
+            border-radius: 4px;
+            padding: 20px 30px;
             font-size: 24px;
+            font-family: 'Georgia', serif;
             margin: 12px;
             cursor: pointer;
             width: 85%;
             max-width: 600px;
             transition: all 0.2s ease-in-out;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
         .btn:hover { 
-            background-color: #2C5282; /* Darker navy on hover */
+            background-color: #3E100D; /* Darker burgundy on hover */
             transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
         }
         .menu-btn { 
-            background-color: #4A5568; /* Slate gray for menu */
+            background-color: #2C1A0D; /* Dark mahogany for menu */
+            text-align: left;
+            padding-left: 30px;
         }
         .menu-btn:hover { 
-            background-color: #2D3748; 
+            background-color: #1A0F07; 
         }
         .hidden { display: none; }
         iframe { 
             width: 100%; 
             height: 500px; 
-            border-radius: 8px; 
-            border: 1px solid #CBD5E0; 
+            border: 3px solid #2C1A0D; 
             margin-bottom: 25px; 
         }
         #feedback { 
@@ -80,18 +92,19 @@
         .progress { 
             font-size: 20px; 
             font-weight: bold;
-            color: #718096; 
+            color: #8B6508; /* Dark Goldenrod */
             margin-top: -15px; 
             margin-bottom: 25px; 
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-family: 'Georgia', serif;
         }
     </style>
 </head>
 <body>
 
 <div class="container" id="menuScreen">
-    <h1>Documentary Library</h1>
+    <h1><span class="ornament">⚜</span> Documentary Library <span class="ornament">⚜</span></h1>
     <div id="menuButtons"></div>
 </div>
 
@@ -101,11 +114,11 @@
     <br>
     <button class="btn" onclick="startQuiz()">I Finished the Episode! Let's Play</button>
     <br>
-    <button class="btn menu-btn" onclick="showMenu()">Return to Library</button>
+    <button class="btn menu-btn" style="text-align: center; padding-left: 0;" onclick="showMenu()">Return to Library</button>
 </div>
 
 <div class="container hidden" id="quizScreen">
-    <h1>Historical Review</h1>
+    <h1><span class="ornament">⚙</span> Historical Review <span class="ornament">⚙</span></h1>
     <div class="progress" id="quizProgress">Question 1 of 5</div>
     <p id="questionText">Question goes here</p>
     <div id="answerButtons"></div>
@@ -113,16 +126,16 @@
 </div>
 
 <div class="container hidden" id="successScreen">
-    <h1>Excellent Work!</h1>
+    <h1><span class="ornament">★</span> Excellent Work! <span class="ornament">★</span></h1>
     <p id="funFact">Fun fact goes here.</p>
-    <button class="btn" onclick="showMenu()">Return to Library</button>
+    <button class="btn" style="text-align: center; padding-left: 0;" onclick="showMenu()">Return to Library</button>
 </div>
 
 <script>
-    // THE CONTENT DATABASE
+    // THE CONTENT DATABASE (With Gilded Age Industry Icons)
     const episodes = [
         {
-            title: "Ep 1: A New War Changes The Country",
+            title: "🚂 Ep 1: A New War Changes The Country",
             youtubeId: "DydmaedDIhE",
             fact: "To bypass Vanderbilt's railroads, John D. Rockefeller completely revolutionized the industry by building a massive 4,000-mile pipeline to transport his oil.",
             questions: [
@@ -134,7 +147,7 @@
             ]
         },
         {
-            title: "Ep 2: How Steel Forged a US Empire",
+            title: "⚙️ Ep 2: How Steel Forged a US Empire",
             youtubeId: "EI_4QDByiW4",
             fact: "Andrew Carnegie was an incredible philanthropist. Before he died, he gave away over $350 million, building thousands of public libraries across the United States.",
             questions: [
@@ -146,7 +159,7 @@
             ]
         },
         {
-            title: "Ep 3: Greed Triggers a Horrific Disaster",
+            title: "🏭 Ep 3: Greed Triggers a Horrific Disaster",
             youtubeId: "SO-CGn0Ig-U",
             fact: "The Johnstown Flood was a turning point for Andrew Carnegie. Seeking to repair his public image, he devoted the second half of his life entirely to giving his money away.",
             questions: [
@@ -158,7 +171,7 @@
             ]
         },
         {
-            title: "Ep 4: How Edison Electrified the USA",
+            title: "💡 Ep 4: How Edison Electrified the USA",
             youtubeId: "p0xBhGLLnbQ",
             fact: "J.P. Morgan’s home was the very first private residence in the world to be fully lit by electricity, powered by a noisy generator Edison installed in the basement!",
             questions: [
@@ -170,7 +183,7 @@
             ]
         },
         {
-            title: "Ep 5: Edison vs. Tesla",
+            title: "⚡ Ep 5: Edison vs. Tesla",
             youtubeId: "D3sWFU_zAcY",
             fact: "The Niagara Falls power plant was the ultimate victory for Nikola Tesla and AC power, proving that electricity could be transmitted safely over massive distances.",
             questions: [
@@ -182,7 +195,7 @@
             ]
         },
         {
-            title: "Ep 6: How the Railroad Powered the US",
+            title: "🏦 Ep 6: How the Railroad Powered the US",
             youtubeId: "HkLqAqOvynk",
             fact: "J.P. Morgan was so powerful that when the United States government ran out of gold and faced bankruptcy in 1895, Morgan personally loaned the government enough money to save the economy.",
             questions: [
@@ -194,101 +207,11 @@
             ]
         },
         {
-            title: "Ep 7: How Henry Ford Invented the Model T",
+            title: "🚗 Ep 7: How Henry Ford Invented the Model T",
             youtubeId: "fvBYsGRJ7x4",
             fact: "By 1918, half of all the cars on the road in the entire United States were Model Ts! Ford's assembly line changed the world forever.",
             questions: [
                 { q: "Henry Ford revolutionized manufacturing by perfecting the moving ________.", correct: "Assembly Line", wrong1: "Steam Engine", wrong2: "Locomotive" },
                 { q: "Ford's most famous and affordable automobile was called the Model ________.", correct: "T", wrong1: "A", wrong2: "X" },
                 { q: "Before building cars, Henry Ford worked as a chief engineer for which famous inventor?", correct: "Thomas Edison", wrong1: "Alexander Graham Bell", wrong2: "Nikola Tesla" },
-                { q: "Ford paid his workers $5 a day, which was revolutionary because it allowed them to ________.", correct: "Afford the cars they were building", wrong1: "Retire early", wrong2: "Buy their own factories" },
-                { q: "The Model T was incredibly efficient to mass-produce, and was famously only available in one color. What color was it?", correct: "Black", wrong1: "Red", wrong2: "Silver" }
-            ]
-        }
-    ];
-
-    // APP LOGIC
-    let currentEpisode = 0;
-    let currentQuestion = 0;
-
-    // Build the Main Menu
-    const menuContainer = document.getElementById('menuButtons');
-    episodes.forEach((ep, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'btn menu-btn';
-        btn.innerText = ep.title;
-        btn.onclick = () => loadEpisode(index);
-        menuContainer.appendChild(btn);
-        menuContainer.appendChild(document.createElement('br'));
-    });
-
-    function showScreen(screenId) {
-        document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
-        document.getElementById(screenId).classList.remove('hidden');
-    }
-
-    function showMenu() {
-        document.getElementById('videoPlayer').src = ""; // Stop video from playing in background
-        showScreen('menuScreen');
-    }
-
-    function loadEpisode(index) {
-        currentEpisode = index;
-        document.getElementById('videoTitle').innerText = episodes[index].title;
-        document.getElementById('videoPlayer').src = "https://www.youtube.com/embed/" + episodes[index].youtubeId;
-        showScreen('videoScreen');
-    }
-
-    function startQuiz() {
-        document.getElementById('videoPlayer').src = ""; // Stop video
-        currentQuestion = 0;
-        showQuestion();
-        showScreen('quizScreen');
-    }
-
-    function showQuestion() {
-        const qData = episodes[currentEpisode].questions[currentQuestion];
-        document.getElementById('quizProgress').innerText = `Question ${currentQuestion + 1} of 5`;
-        document.getElementById('questionText').innerText = qData.q;
-        document.getElementById('feedback').innerText = "";
-        
-        // Shuffle answers so the correct one isn't always first
-        const answers = [qData.correct, qData.wrong1, qData.wrong2].sort(() => Math.random() - 0.5);
-        
-        const btnContainer = document.getElementById('answerButtons');
-        btnContainer.innerHTML = ""; // Clear old buttons
-        
-        answers.forEach(ans => {
-            const btn = document.createElement('button');
-            btn.className = 'btn';
-            btn.innerText = ans;
-            btn.onclick = () => checkAnswer(ans === qData.correct);
-            btnContainer.appendChild(btn);
-            btnContainer.appendChild(document.createElement('br'));
-        });
-    }
-
-    function checkAnswer(isCorrect) {
-        const feedbackEl = document.getElementById('feedback');
-        if (isCorrect) {
-            feedbackEl.innerText = "Spot on! You got it.";
-            feedbackEl.style.color = "#2F855A"; // Professional green
-            
-            setTimeout(() => {
-                currentQuestion++;
-                if (currentQuestion < 5) {
-                    showQuestion();
-                } else {
-                    document.getElementById('funFact').innerHTML = "<strong>Did you know?</strong> " + episodes[currentEpisode].fact;
-                    showScreen('successScreen');
-                }
-            }, 1500);
-        } else {
-            feedbackEl.innerText = "Not quite! Try another one.";
-            feedbackEl.style.color = "#C53030"; // Professional dark red
-        }
-    }
-</script>
-
-</body>
-</html>
+                { q: "Ford paid his workers $5 a day, which was revolutionary because it allowed them to ________.", correct: "Afford the cars they were building", wrong1: "Retire early", wrong2
