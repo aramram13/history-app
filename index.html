@@ -26,14 +26,8 @@
             max-width: 900px;
             width: 100%;
         }
-        h1 {
-            font-size: 36px;
-            color: #2C3E50;
-        }
-        p {
-            font-size: 26px;
-            line-height: 1.6;
-        }
+        h1 { font-size: 36px; color: #2C3E50; margin-bottom: 30px; }
+        p { font-size: 26px; line-height: 1.6; }
         .btn {
             background-color: #3498DB;
             color: white;
@@ -44,68 +38,205 @@
             margin: 15px;
             cursor: pointer;
             width: 80%;
-            max-width: 500px;
+            max-width: 600px;
             transition: background-color 0.3s;
         }
-        .btn:hover {
-            background-color: #2980B9;
-        }
-        .hidden {
-            display: none;
-        }
-        /* Video Embed Styling update */
-        .video-wrapper {
-            margin-bottom: 30px;
-        }
-        #feedback {
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
+        .btn:hover { background-color: #2980B9; }
+        .menu-btn { background-color: #2C3E50; }
+        .menu-btn:hover { background-color: #1A252F; }
+        .hidden { display: none; }
+        iframe { width: 100%; height: 500px; border-radius: 10px; border: none; margin-bottom: 20px; }
+        #feedback { font-size: 24px; font-weight: bold; margin-top: 20px; min-height: 30px; }
+        .progress { font-size: 18px; color: #7F8C8D; margin-top: -20px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-<div class="container" id="videoScreen">
-    <h1>Episode 1: A New War Changes The Country Forever</h1>
-    
-    <div class="video-wrapper">
-        <iframe width="100%" height="500" src="https://www.youtube.com/embed/DydmaedDIhE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    </div>
-    
-    <button class="btn" onclick="nextScreen('quizScreen')">I Finished the Episode! Let's Play</button>
+<div class="container" id="menuScreen">
+    <h1>Select an Episode to Watch</h1>
+    <div id="menuButtons"></div>
+</div>
+
+<div class="container hidden" id="videoScreen">
+    <h1 id="videoTitle">Episode Title</h1>
+    <iframe id="videoPlayer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <br>
+    <button class="btn" onclick="startQuiz()">I Finished the Episode! Let's Play</button>
+    <br>
+    <button class="btn menu-btn" onclick="showMenu()">Back to Menu</button>
 </div>
 
 <div class="container hidden" id="quizScreen">
     <h1>Trivia Time!</h1>
-    <p>Cornelius Vanderbilt built a massive shipping and railroad empire, earning him what famous naval nickname?</p>
-    <button class="btn" onclick="checkAnswer(false)">The Captain</button><br>
-    <button class="btn" onclick="checkAnswer(true)">The Commodore</button><br>
-    <button class="btn" onclick="checkAnswer(false)">The Admiral</button>
+    <div class="progress" id="quizProgress">Question 1 of 5</div>
+    <p id="questionText">Question goes here</p>
+    <div id="answerButtons"></div>
     <div id="feedback"></div>
 </div>
 
 <div class="container hidden" id="successScreen">
     <h1>Wonderful Job! 🌟</h1>
-    <p><strong>Did you know?</strong> To bypass Vanderbilt's railroads, John D. Rockefeller completely revolutionized the industry by building a massive 4,000-mile pipeline to transport his oil.</p>
-    <button class="btn" onclick="location.reload()">Watch Again or Choose a New Episode</button>
+    <p id="funFact">Fun fact goes here.</p>
+    <button class="btn" onclick="showMenu()">Choose Another Episode</button>
 </div>
 
 <script>
-    function nextScreen(screenId) {
+    // THE CONTENT DATABASE
+    const episodes = [
+        {
+            title: "Ep 1: A New War Changes The Country",
+            youtubeId: "DydmaedDIhE",
+            fact: "To bypass Vanderbilt's railroads, John D. Rockefeller completely revolutionized the industry by building a massive 4,000-mile pipeline to transport his oil.",
+            questions: [
+                { q: "Cornelius Vanderbilt built a massive shipping and railroad empire, earning him what famous naval nickname?", correct: "The Commodore", wrong1: "The Captain", wrong2: "The Admiral" },
+                { q: "What major American conflict had just ended when Vanderbilt started expanding his railroad empire?", correct: "The Civil War", wrong1: "World War I", wrong2: "The Revolutionary War" },
+                { q: "Before cars were invented, what was crude oil primarily refined into so people could safely light their homes?", correct: "Kerosene", wrong1: "Gasoline", wrong2: "Diesel" },
+                { q: "To bypass the railroads, John D. Rockefeller built a massive 4,000-mile ________ to transport his oil.", correct: "Pipeline", wrong1: "Highway", wrong2: "Canal" },
+                { q: "Vanderbilt's wealth was built on railroads, but Rockefeller's wealth was built on what resource?", correct: "Oil", wrong1: "Coal", wrong2: "Steel" }
+            ]
+        },
+        {
+            title: "Ep 2: How Steel Forged a US Empire",
+            youtubeId: "EI_4QDByiW4",
+            fact: "Andrew Carnegie was an incredible philanthropist. Before he died, he gave away over $350 million, building thousands of public libraries across the United States.",
+            questions: [
+                { q: "Who was the Scottish immigrant that built a massive bridge over the Mississippi River?", correct: "Andrew Carnegie", wrong1: "Thomas Edison", wrong2: "Henry Ford" },
+                { q: "Carnegie revolutionized construction by mass-producing what metal, which was much stronger than iron?", correct: "Steel", wrong1: "Aluminum", wrong2: "Copper" },
+                { q: "To prove to the public that his new bridge was safe, Carnegie led what large animal across it?", correct: "An Elephant", wrong1: "A Horse", wrong2: "A Bear" },
+                { q: "Carnegie's mentor was a powerful and wealthy railroad executive named Tom ________.", correct: "Scott", wrong1: "Smith", wrong2: "Jones" },
+                { q: "What city was Carnegie's first massive bridge built in to connect the East and West?", correct: "St. Louis", wrong1: "Chicago", wrong2: "New York" }
+            ]
+        },
+        {
+            title: "Ep 3: Greed Triggers a Horrific Disaster",
+            youtubeId: "SO-CGn0Ig-U",
+            fact: "The Johnstown Flood was a turning point for Andrew Carnegie. Seeking to repair his public image, he devoted the second half of his life entirely to giving his money away.",
+            questions: [
+                { q: "Carnegie hired a ruthless businessman to help run his steel empire. What was his name?", correct: "Henry Frick", wrong1: "J.P. Morgan", wrong2: "Nikola Tesla" },
+                { q: "To create a private lake for a wealthy club, a dam was altered, eventually leading to a devastating flood in what town?", correct: "Johnstown", wrong1: "Jamestown", wrong2: "Pittsburgh" },
+                { q: "After the flood, Andrew Carnegie donated millions of dollars to rebuild. This was the start of his massive era of ________.", correct: "Philanthropy", wrong1: "Politics", wrong2: "Military Service" },
+                { q: "Where was Carnegie's most famous and massive steel plant located, which later became the site of a famous labor strike?", correct: "Homestead, PA", wrong1: "Detroit, MI", wrong2: "Cleveland, OH" },
+                { q: "Did Andrew Carnegie and Henry Frick remain best friends for the rest of their lives?", correct: "No, they became bitter rivals", wrong1: "Yes, they were always close", wrong2: "They retired together" }
+            ]
+        },
+        {
+            title: "Ep 4: How Edison Electrified the USA",
+            youtubeId: "p0xBhGLLnbQ",
+            fact: "J.P. Morgan’s home was the very first private residence in the world to be fully lit by electricity, powered by a noisy generator Edison installed in the basement!",
+            questions: [
+                { q: "Which powerful American banker invested heavily in Thomas Edison's new inventions?", correct: "J.P. Morgan", wrong1: "Cornelius Vanderbilt", wrong2: "Henry Ford" },
+                { q: "Thomas Edison is most famous for inventing the first practical, long-lasting incandescent ________.", correct: "Lightbulb", wrong1: "Telephone", wrong2: "Radio" },
+                { q: "Edison's electrical power system was based on Direct Current. What is the abbreviation for this?", correct: "DC", wrong1: "AC", wrong2: "PC" },
+                { q: "Where did J.P. Morgan live when his home became the first private residence fully lit by electricity?", correct: "New York City", wrong1: "Boston", wrong2: "Washington D.C." },
+                { q: "Morgan's home was powered by a massive, noisy generator that Edison's team installed in the ________.", correct: "Basement", wrong1: "Attic", wrong2: "Backyard" }
+            ]
+        },
+        {
+            title: "Ep 5: Edison vs. Tesla",
+            youtubeId: "D3sWFU_zAcY",
+            fact: "The Niagara Falls power plant was the ultimate victory for Nikola Tesla and AC power, proving that electricity could be transmitted safely over massive distances.",
+            questions: [
+                { q: "Who was the brilliant engineer who worked for Edison but believed Alternating Current (AC) was a better system?", correct: "Nikola Tesla", wrong1: "Alexander Graham Bell", wrong2: "Albert Einstein" },
+                { q: "The intense competition over which electrical system would power the country was known as the 'War of the ________.'", correct: "Currents", wrong1: "Lights", wrong2: "Wires" },
+                { q: "Which wealthy businessman and inventor backed Nikola Tesla and his AC power system?", correct: "George Westinghouse", wrong1: "John D. Rockefeller", wrong2: "Andrew Carnegie" },
+                { q: "To prove AC power was dangerous, Edison's team shockingly used it to invent what device?", correct: "The Electric Chair", wrong1: "The Microwave", wrong2: "The Toaster" },
+                { q: "Which power system ultimately won the war, and is the same system that powers our homes today?", correct: "AC (Alternating Current)", wrong1: "DC (Direct Current)", wrong2: "Battery Power" }
+            ]
+        },
+        {
+            title: "Ep 6: How the Railroad Powered the US",
+            youtubeId: "HkLqAqOvynk",
+            fact: "J.P. Morgan was so powerful that when the United States government ran out of gold and faced bankruptcy in 1895, Morgan personally loaned the government enough money to save the economy.",
+            questions: [
+                { q: "Unlike Edison or Carnegie, J.P. Morgan was not an inventor or a builder. He was a powerful ________.", correct: "Banker", wrong1: "Politician", wrong2: "Lawyer" },
+                { q: "Morgan bought out Andrew Carnegie and created the first billion-dollar corporation, called U.S. ________.", correct: "Steel", wrong1: "Rail", wrong2: "Oil" },
+                { q: "When one single company completely controls an entire industry, killing off competition, it is called a ________.", correct: "Monopoly", wrong1: "Democracy", wrong2: "Franchise" },
+                { q: "Which American President became famous for breaking up these massive, powerful monopolies?", correct: "Theodore Roosevelt", wrong1: "Abraham Lincoln", wrong2: "George Washington" },
+                { q: "During a massive financial crisis, J.P. Morgan actually used his own money to bail out the ________.", correct: "U.S. Government", wrong1: "British Empire", wrong2: "State of New York" }
+            ]
+        }
+    ];
+
+    // APP LOGIC
+    let currentEpisode = 0;
+    let currentQuestion = 0;
+
+    // Build the Main Menu
+    const menuContainer = document.getElementById('menuButtons');
+    episodes.forEach((ep, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn menu-btn';
+        btn.innerText = ep.title;
+        btn.onclick = () => loadEpisode(index);
+        menuContainer.appendChild(btn);
+        menuContainer.appendChild(document.createElement('br'));
+    });
+
+    function showScreen(screenId) {
         document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
         document.getElementById(screenId).classList.remove('hidden');
+    }
+
+    function showMenu() {
+        document.getElementById('videoPlayer').src = ""; // Stop video from playing in background
+        showScreen('menuScreen');
+    }
+
+    function loadEpisode(index) {
+        currentEpisode = index;
+        document.getElementById('videoTitle').innerText = episodes[index].title;
+        document.getElementById('videoPlayer').src = "https://www.youtube.com/embed/" + episodes[index].youtubeId;
+        showScreen('videoScreen');
+    }
+
+    function startQuiz() {
+        document.getElementById('videoPlayer').src = ""; // Stop video
+        currentQuestion = 0;
+        showQuestion();
+        showScreen('quizScreen');
+    }
+
+    function showQuestion() {
+        const qData = episodes[currentEpisode].questions[currentQuestion];
+        document.getElementById('quizProgress').innerText = `Question ${currentQuestion + 1} of 5`;
+        document.getElementById('questionText').innerText = qData.q;
+        document.getElementById('feedback').innerText = "";
+        
+        // Shuffle answers so the correct one isn't always first
+        const answers = [qData.correct, qData.wrong1, qData.wrong2].sort(() => Math.random() - 0.5);
+        
+        const btnContainer = document.getElementById('answerButtons');
+        btnContainer.innerHTML = ""; // Clear old buttons
+        
+        answers.forEach(ans => {
+            const btn = document.createElement('button');
+            btn.className = 'btn';
+            btn.innerText = ans;
+            btn.onclick = () => checkAnswer(ans === qData.correct);
+            btnContainer.appendChild(btn);
+            btnContainer.appendChild(document.createElement('br'));
+        });
     }
 
     function checkAnswer(isCorrect) {
         const feedbackEl = document.getElementById('feedback');
         if (isCorrect) {
             feedbackEl.innerText = "Spot on! You got it.";
-            feedbackEl.style.color = "#27AE60"; 
-            setTimeout(() => nextScreen('successScreen'), 1500); 
+            feedbackEl.style.color = "#27AE60";
+            
+            // Wait 1.5 seconds, then go to next question or success screen
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < 5) {
+                    showQuestion();
+                } else {
+                    document.getElementById('funFact').innerText = "Did you know? " + episodes[currentEpisode].fact;
+                    showScreen('successScreen');
+                }
+            }, 1500);
         } else {
             feedbackEl.innerText = "Not quite! Try another one.";
-            feedbackEl.style.color = "#E74C3C"; 
+            feedbackEl.style.color = "#E74C3C";
         }
     }
 </script>
