@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History Explorer: The Men Who Built America</title>
     <style>
-        /* Senior-Friendly CSS */
+        /* Professional & Senior-Friendly CSS */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #F4F4F9;
-            color: #333333;
+            background-color: #F7FAFC; /* Softer, warmer background */
+            color: #2D3748; /* High-contrast charcoal text */
             margin: 0;
             padding: 20px;
             display: flex;
@@ -20,40 +20,78 @@
         }
         .container {
             background-color: #FFFFFF;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 45px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08); /* Softer, wider shadow */
+            border: 1px solid #E2E8F0; /* Subtle professional border */
             max-width: 900px;
             width: 100%;
         }
-        h1 { font-size: 36px; color: #2C3E50; margin-bottom: 30px; }
-        p { font-size: 26px; line-height: 1.6; }
+        h1 { 
+            font-family: 'Georgia', serif; /* Classic historical look */
+            font-size: 38px; 
+            color: #1A365D; /* Deep navy blue */
+            margin-bottom: 30px; 
+            border-bottom: 2px solid #E2E8F0;
+            padding-bottom: 15px;
+        }
+        p { 
+            font-size: 26px; 
+            line-height: 1.7; 
+        }
         .btn {
-            background-color: #3498DB;
+            background-color: #2B6CB0; /* Professional rich blue */
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 20px 40px;
             font-size: 24px;
-            margin: 15px;
+            margin: 12px;
             cursor: pointer;
-            width: 80%;
+            width: 85%;
             max-width: 600px;
-            transition: background-color 0.3s;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .btn:hover { background-color: #2980B9; }
-        .menu-btn { background-color: #2C3E50; }
-        .menu-btn:hover { background-color: #1A252F; }
+        .btn:hover { 
+            background-color: #2C5282; /* Darker navy on hover */
+            transform: translateY(-2px);
+        }
+        .menu-btn { 
+            background-color: #4A5568; /* Slate gray for menu */
+        }
+        .menu-btn:hover { 
+            background-color: #2D3748; 
+        }
         .hidden { display: none; }
-        iframe { width: 100%; height: 500px; border-radius: 10px; border: none; margin-bottom: 20px; }
-        #feedback { font-size: 24px; font-weight: bold; margin-top: 20px; min-height: 30px; }
-        .progress { font-size: 18px; color: #7F8C8D; margin-top: -20px; margin-bottom: 20px; }
+        iframe { 
+            width: 100%; 
+            height: 500px; 
+            border-radius: 8px; 
+            border: 1px solid #CBD5E0; 
+            margin-bottom: 25px; 
+        }
+        #feedback { 
+            font-size: 26px; 
+            font-weight: bold; 
+            margin-top: 25px; 
+            min-height: 35px; 
+        }
+        .progress { 
+            font-size: 20px; 
+            font-weight: bold;
+            color: #718096; 
+            margin-top: -15px; 
+            margin-bottom: 25px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container" id="menuScreen">
-    <h1>Select an Episode to Watch</h1>
+    <h1>Documentary Library</h1>
     <div id="menuButtons"></div>
 </div>
 
@@ -63,11 +101,11 @@
     <br>
     <button class="btn" onclick="startQuiz()">I Finished the Episode! Let's Play</button>
     <br>
-    <button class="btn menu-btn" onclick="showMenu()">Back to Menu</button>
+    <button class="btn menu-btn" onclick="showMenu()">Return to Library</button>
 </div>
 
 <div class="container hidden" id="quizScreen">
-    <h1>Trivia Time!</h1>
+    <h1>Historical Review</h1>
     <div class="progress" id="quizProgress">Question 1 of 5</div>
     <p id="questionText">Question goes here</p>
     <div id="answerButtons"></div>
@@ -75,9 +113,9 @@
 </div>
 
 <div class="container hidden" id="successScreen">
-    <h1>Wonderful Job! 🌟</h1>
+    <h1>Excellent Work!</h1>
     <p id="funFact">Fun fact goes here.</p>
-    <button class="btn" onclick="showMenu()">Choose Another Episode</button>
+    <button class="btn" onclick="showMenu()">Return to Library</button>
 </div>
 
 <script>
@@ -154,6 +192,18 @@
                 { q: "Which American President became famous for breaking up these massive, powerful monopolies?", correct: "Theodore Roosevelt", wrong1: "Abraham Lincoln", wrong2: "George Washington" },
                 { q: "During a massive financial crisis, J.P. Morgan actually used his own money to bail out the ________.", correct: "U.S. Government", wrong1: "British Empire", wrong2: "State of New York" }
             ]
+        },
+        {
+            title: "Ep 7: How Henry Ford Invented the Model T",
+            youtubeId: "fvBYsGRJ7x4",
+            fact: "By 1918, half of all the cars on the road in the entire United States were Model Ts! Ford's assembly line changed the world forever.",
+            questions: [
+                { q: "Henry Ford revolutionized manufacturing by perfecting the moving ________.", correct: "Assembly Line", wrong1: "Steam Engine", wrong2: "Locomotive" },
+                { q: "Ford's most famous and affordable automobile was called the Model ________.", correct: "T", wrong1: "A", wrong2: "X" },
+                { q: "Before building cars, Henry Ford worked as a chief engineer for which famous inventor?", correct: "Thomas Edison", wrong1: "Alexander Graham Bell", wrong2: "Nikola Tesla" },
+                { q: "Ford paid his workers $5 a day, which was revolutionary because it allowed them to ________.", correct: "Afford the cars they were building", wrong1: "Retire early", wrong2: "Buy their own factories" },
+                { q: "The Model T was incredibly efficient to mass-produce, and was famously only available in one color. What color was it?", correct: "Black", wrong1: "Red", wrong2: "Silver" }
+            ]
         }
     ];
 
@@ -222,21 +272,20 @@
         const feedbackEl = document.getElementById('feedback');
         if (isCorrect) {
             feedbackEl.innerText = "Spot on! You got it.";
-            feedbackEl.style.color = "#27AE60";
+            feedbackEl.style.color = "#2F855A"; // Professional green
             
-            // Wait 1.5 seconds, then go to next question or success screen
             setTimeout(() => {
                 currentQuestion++;
                 if (currentQuestion < 5) {
                     showQuestion();
                 } else {
-                    document.getElementById('funFact').innerText = "Did you know? " + episodes[currentEpisode].fact;
+                    document.getElementById('funFact').innerHTML = "<strong>Did you know?</strong> " + episodes[currentEpisode].fact;
                     showScreen('successScreen');
                 }
             }, 1500);
         } else {
             feedbackEl.innerText = "Not quite! Try another one.";
-            feedbackEl.style.color = "#E74C3C";
+            feedbackEl.style.color = "#C53030"; // Professional dark red
         }
     }
 </script>
