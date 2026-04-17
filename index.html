@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History Explorer: The Men Who Built America</title>
-	<link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest.json">
     <style>
         /* Gilded Age & Senior-Friendly CSS */
         body {
@@ -120,7 +120,7 @@
 
 <div class="container hidden" id="quizScreen">
     <h1><span class="ornament">&#x2699;</span> Historical Review <span class="ornament">&#x2699;</span></h1>
-    <div class="progress" id="quizProgress">Question 1 of 5</div>
+    <div class="progress" id="quizProgress">Question 1 of 4</div>
     <p id="questionText">Question goes here</p>
     <div id="answerButtons"></div>
     <div id="feedback"></div>
@@ -133,8 +133,6 @@
 </div>
 
 <script>
-// THE POPUP TEST - If this works, the script made it!
-
 const episodes = [
     {
         title: "Ep 1: A New War Changes The Country", youtubeId: "DydmaedDIhE",
@@ -150,10 +148,10 @@ const episodes = [
         title: "Ep 2: How Steel Forged a US Empire", youtubeId: "EI_4QDByiW4",
         fact: "Andrew Carnegie was an incredible philanthropist. Before he died, he gave away over $350 million, building thousands of public libraries across the United States.",
         questions: [
-            { q: "Who was the Scottish immigrant that built a massive bridge over the Mississippi River?", correct: "Andrew Carnegie", wrong1: "Thomas Edison", wrong2: "Henry Ford" },
+            { q: "Andrew Carnegie, who would go on to build a massive steel empire, immigrated to the United States as a young boy from which country?", correct: "Scotland", wrong1: "Ireland", wrong2: "Germany" },
             { q: "Carnegie revolutionized construction by mass-producing what metal, which was much stronger than iron?", correct: "Steel", wrong1: "Aluminum", wrong2: "Copper" },
-            { q: "To prove to the public that his new bridge was safe, Carnegie led what large animal across it?", correct: "An Elephant", wrong1: "A Horse", wrong2: "A Bear" },
-            { q: "Carnegie's mentor was a powerful and wealthy railroad executive named Tom ________.", correct: "Scott", wrong1: "Smith", wrong2: "Jones" }
+            { q: "With an abundance of strong, affordable steel, architects in cities like Chicago began building towering new structures known as what?", correct: "Skyscrapers", wrong1: "Pyramids", wrong2: "Cathedrals" },
+            { q: "To mass-produce his steel, Carnegie utilized a revolutionary method created by an English inventor known as the ________ Process.", correct: "Bessemer", wrong1: "Franklin", wrong2: "Edison" }
         ]
     },
     {
